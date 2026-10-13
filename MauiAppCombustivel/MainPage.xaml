@@ -11,13 +11,26 @@
                 Source="dotnet_bot.png"
                 HeightRequest="185"
                 Aspect="AspectFit"
-                SemanticProperties.Description="dot net bot in a race car number ten" />
+                SemanticProperties.Description="dot net bot in a submarine number ten" />
 
-            <Label Text="Preço do Etanol:" />
-            <Entry x:Name="txt_etanol" Placeholder="R$"/>
-            
-            <Label Text="Preço da Gasolina: "/>
-            <Entry x:Name="txt_gasolina" Placeholder="R$"/>
+            <Label Text="Comparador de Combustível"/>
+
+            <Label Text="Marca do veículo: "/>
+            <Entry x:Name="txt_marca" Placeholder="Ex: Volkswagen"/>
+
+            <Label Text="Modelo do veículo: "/>
+            <Entry x:Name="txt_modelo" Placeholder="Ex: Gol"/>
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                <VerticalStackLayout Grid.Column="0" Spacing="8">
+                    <Label Text="Preço do Etanol:" />
+                    <Entry x:Name="txt_etanol" Placeholder="R$" Keyboard="Numeric"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="1" Spacing="8">
+                    <Label Text="Preço da Gasolina: "/>
+                    <Entry x:Name="txt_gasolina" Placeholder="R$" Keyboard="Numeric"/>
+                </VerticalStackLayout>
+            </Grid>
 
             <Button Text="Qual compensa mais?" Clicked="Button_Clicked"/>
         </VerticalStackLayout>

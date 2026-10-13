@@ -9,27 +9,50 @@
             InitializeComponent();
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
+        private async void Button_Clicked(object sender, EventArgs e)
         {
             try
             {
-                double etanol = Convert.ToDouble(txt_etanol.Text);
-                double gasolina = Convert.ToDouble(txt_gasolina.Text);
+                string marca = txt_marca.Text?.Trim() ?? "";
+                string modelo = txt_modelo.Text?.Trim() ?? "";
+
+                if(marca == "" || modelo == "")
+                {
+                    await DisplayAlertAsync("Erro", "Por favor, preencha todos os campos.", "OK");
+                    return;
+                }
+
+                if (!double.TryParse(
+                        txt_etanol.Text?.Replace(",", "."),
+                        System.Globalization.NumberStyles.Any,
+                        System.Globalization.CultureInfo.InvariantCulture,
+                        out double etanol) ||
+                    !double.TryParse(
+                        txt_gasolina.Text?.Replace(",", "."),
+                        System.Globalization.NumberStyles.Any,
+                        System.Globalization.CultureInfo.InvariantCulture,
+                        out double gasolina) ||
+                    etanol <= 0 || gasolina <= 0)
+                {
+                    await DisplayAlertAsync("Atenção", "Informe preços válidos e maiores que zero.", "OK");
+
+                    return;
+                }
 
                 string msg = "";
                 if (etanol <= (gasolina * 0.7))
                 {
-                    msg = "O etanol é mais vantajoso";
+                    msg = $"O etanol é mais vantajoso para seu {marca} {modelo}.";
                 } else
                 {
-                    msg = "A gasolina é mais vantajosa";
+                    msg = $"A gasolina é mais vantajosa para seu {marca} {modelo}.";
                 }
 
-                DisplayAlert("Calculado", msg, "OK");
+                await DisplayAlertAsync("Calculado", msg, "OK");
 
             } catch(Exception ex)
             {
-                DisplayAlert("Ops", ex.Message, "Fechar");
+                await DisplayAlertAsync("Ops", ex.Message, "Fechar");
             }
         }
     }
